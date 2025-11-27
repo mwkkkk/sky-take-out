@@ -104,4 +104,36 @@ public class EmployeeController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 设置用户状态为可用/不可用
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("设置用户状态")
+    public Result availableOrUnavailable(@PathVariable Integer status, Long id) {
+        log.info("设置状态为：{}，用户id为：{}",status, id);
+        employeeService.availableOrUnavailable(status, id);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("通过id查询员工信息")
+    public Result<Employee> getEmployeeById(@PathVariable Long id) {
+        log.info("要查询的员工id为：{}", id);
+        Employee employee = employeeService.getEmployeeById(id);
+        return Result.success(employee);
+    }
+
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("要编辑的员工信息为：{}", employeeDTO);
+        employeeService.updateEmployee(employeeDTO);
+        return Result.success();
+    }
+
+
+
 }
